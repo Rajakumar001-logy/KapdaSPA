@@ -1,0 +1,279 @@
+.app-body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+  padding-bottom: 3rem;
+}
+
+.app-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  margin: 0 0 0.5rem;
+}
+
+.app-lead {
+  color: var(--text-muted);
+  max-width: 56ch;
+  margin: 0 0 2rem;
+}
+
+.app-panel {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.app-panel-title {
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
+}
+
+.app-subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.site-nav--static {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-nav--static .nav-list {
+  gap: 1rem;
+}
+
+@media (max-width: 860px) {
+  .app-body .site-nav--static {
+    position: relative;
+    inset: auto;
+    flex-direction: row;
+    padding: 0;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    border: 0;
+    background: transparent;
+  }
+
+  .app-body .site-header .nav-toggle {
+    display: none;
+  }
+}
+
+.app-message {
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  min-height: 1.25rem;
+  color: var(--accent-strong);
+}
+
+.app-message.is-error {
+  color: #f87171;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.tab {
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.tab.is-active {
+  background: var(--accent-dim);
+  border-color: rgba(94, 234, 212, 0.35);
+  color: var(--text);
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.is-active {
+  display: block;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.field-span-2 {
+  grid-column: span 2;
+}
+
+@media (max-width: 640px) {
+  .field-span-2 {
+    grid-column: span 1;
+  }
+}
+
+.field-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.btn-sm {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.8125rem;
+}
+
+.app-userbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+}
+
+.app-logged-in[hidden] {
+  display: none !important;
+}
+
+.services-grid {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.service-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.service-row label {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.service-meta {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.service-qty {
+  width: 5rem;
+}
+
+.slot-grid {
+  margin-top: 1rem;
+}
+
+.bookings-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bookings-list li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.bookings-list button {
+  font: inherit;
+  background: none;
+  border: none;
+  color: var(--accent-strong);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.booking-detail {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.detail-items {
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.25rem;
+}
+
+.timeline {
+  margin: 1rem 0 0;
+  padding-left: 1.25rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.timeline li {
+  margin-bottom: 0.35rem;
+}
+
+.admin-bookings {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+}
+
+.admin-bookings li {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+code {
+  font-size: 0.85em;
+  background: var(--surface);
+  padding: 0.1em 0.35em;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
