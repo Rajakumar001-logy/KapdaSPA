@@ -1,30 +1,43 @@
-import { Navbar } from './components/layout/Navbar'
-import { Footer } from './components/layout/Footer'
-import { Hero } from './components/sections/Hero'
-import { Features } from './components/sections/Features'
-import { HowItWorks } from './components/sections/HowItWorks'
-import { Services } from './components/sections/Services'
-import { Pricing } from './components/sections/Pricing'
-import { Trust } from './components/sections/Trust'
-import { MobileApp } from './components/sections/MobileApp'
-import { FAQ } from './components/sections/FAQ'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ThemeProvider } from './context/ThemeContext'
+import { AuthProvider } from './context/AuthContext'
+import { ProtectedRoute } from './components/auth/ProtectedRoute'
+import { LandingPage } from './pages/LandingPage'
+import { LoginPage, RegisterPage } from './pages/auth/AuthPages'
+import { DashboardLayout } from './pages/dashboard/DashboardLayout'
+import { OverviewPage } from './pages/dashboard/OverviewPage'
+import { ProfilePage } from './pages/dashboard/ProfilePage'
+import { OrdersPage } from './pages/dashboard/OrdersPage'
+import { OrderDetailPage } from './pages/dashboard/OrderDetailPage'
+import { BookPickupPage } from './pages/dashboard/BookPickupPage'
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <Hero />
-        <Features />
-        <HowItWorks />
-        <Services />
-        <Pricing />
-        <Trust />
-        <MobileApp />
-        <FAQ />
-      </main>
-      <Footer />
-    </>
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<OverviewPage />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="orders" element={<OrdersPage />} />
+              <Route path="orders/:id" element={<OrderDetailPage />} />
+              <Route path="book" element={<BookPickupPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 

@@ -1,11 +1,14 @@
 import { motion, type HTMLMotionProps } from 'framer-motion'
-import { forwardRef } from 'react'
+import { forwardRef, type ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 
 type Variant = 'primary' | 'secondary' | 'ghost'
 
 interface ButtonProps extends HTMLMotionProps<'button'> {
   variant?: Variant
   href?: string
+  to?: string
+  children?: ReactNode
 }
 
 const variants: Record<Variant, string> = {
@@ -17,8 +20,16 @@ const variants: Record<Variant, string> = {
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', className = '', href, children, ...props }, ref) => {
+  ({ variant = 'primary', className = '', href, to, children, ...props }, ref) => {
     const classes = `inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300 ${variants[variant]} ${className}`
+
+    if (to) {
+      return (
+        <Link to={to} className={classes}>
+          {children}
+        </Link>
+      )
+    }
 
     if (href) {
       return (

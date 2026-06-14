@@ -2,8 +2,12 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { WashingMachine, BubbleField, WaterWaves } from '../ui/WashingMachine'
+import { useAuth } from '../../context/AuthContext'
 
 export function Hero() {
+  const { user } = useAuth()
+  const bookLink = user ? '/dashboard/book' : '/register'
+
   return (
     <section
       id="hero"
@@ -43,7 +47,7 @@ export function Hero() {
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
-              <Button href="#pricing">
+              <Button to={bookLink}>
                 Book Pickup
                 <ArrowRight className="w-4 h-4" />
               </Button>
