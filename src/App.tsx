@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext'
 import { AuthProvider } from './context/AuthContext'
+import { BubbleBurstProvider } from './context/BubbleBurstContext'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { LandingPage } from './pages/LandingPage'
 import { LoginPage, RegisterPage } from './pages/auth/AuthPages'
@@ -15,7 +16,8 @@ function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <BrowserRouter>
+        <BubbleBurstProvider>
+          <BrowserRouter>
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
@@ -35,7 +37,8 @@ function App() {
               <Route path="book" element={<BookPickupPage />} />
             </Route>
           </Routes>
-        </BrowserRouter>
+          </BrowserRouter>
+        </BubbleBurstProvider>
       </AuthProvider>
     </ThemeProvider>
   )

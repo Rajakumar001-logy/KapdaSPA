@@ -26,8 +26,6 @@ const steps = [
 export function HowItWorks() {
   return (
     <section id="how-it-works" className="section-padding bg-surface relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-lavender-100/40 via-transparent to-transparent dark:from-lavender-900/20 pointer-events-none" />
-
       <div className="container-narrow relative">
         <SectionHeader
           label="How It Works"
@@ -58,7 +56,7 @@ export function HowItWorks() {
                     <span className="text-xs font-bold tracking-widest text-lavender-500 uppercase">
                       Step {step.step}
                     </span>
-                    <h3 className="mt-2 font-serif text-2xl md:text-3xl text-foreground">{step.title}</h3>
+                    <h3 className="mt-2 font-heading text-2xl md:text-3xl text-foreground">{step.title}</h3>
                     <p className="mt-3 text-muted leading-relaxed max-w-sm md:ml-auto md:mr-0 mx-auto">
                       {step.description}
                     </p>

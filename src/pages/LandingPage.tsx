@@ -8,6 +8,7 @@ import { Pricing } from '../components/sections/Pricing'
 import { Trust } from '../components/sections/Trust'
 import { MobileApp } from '../components/sections/MobileApp'
 import { FAQ } from '../components/sections/FAQ'
+import { ServiceAreas } from '../components/sections/ServiceAreas'
 
 export function LandingPage() {
   return (
@@ -22,6 +23,7 @@ export function LandingPage() {
         <Trust />
         <MobileApp />
         <FAQ />
+        <ServiceAreas />
       </main>
       <Footer />
     </>

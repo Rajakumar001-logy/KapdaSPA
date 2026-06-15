@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, Minus } from 'lucide-react'
 import { SectionHeader } from '../ui/SectionHeader'
+import { contactConfig } from '../../config/contact'
 
 const faqs = [
   {
@@ -12,7 +13,7 @@ const faqs = [
   {
     question: 'What areas do you currently serve?',
     answer:
-      'We currently operate across major metro areas including Mumbai, Delhi NCR, Bangalore, and Hyderabad — with new cities launching every quarter. Enter your pin code on our app to check availability.',
+      `We currently serve ${contactConfig.servingCities.join(', ')}. More cities are launching soon — scroll to the bottom of this page to request service in your city.`,
   },
   {
     question: 'How do you handle delicate or designer garments?',

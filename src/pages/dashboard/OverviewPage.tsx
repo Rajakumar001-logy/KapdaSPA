@@ -36,7 +36,7 @@ export function OverviewPage() {
   return (
     <div>
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="font-serif text-3xl text-foreground">Dashboard</h1>
+        <h1 className="font-heading text-3xl text-foreground">Dashboard</h1>
         <p className="text-muted mt-1">Manage your laundry orders and bookings</p>
       </motion.div>
 
@@ -63,7 +63,7 @@ export function OverviewPage() {
                 <p className="text-xs font-semibold uppercase tracking-wider text-lavender-500">
                   Active Order
                 </p>
-                <h2 className="font-serif text-2xl text-foreground mt-1">{activeOrder.order_number}</h2>
+                <h2 className="font-heading text-2xl text-foreground mt-1">{activeOrder.order_number}</h2>
                 <p className="text-sm text-muted mt-1">
                   {SERVICE_LABELS[activeOrder.service_type]} · {STATUS_LABELS[activeOrder.status]}
                 </p>

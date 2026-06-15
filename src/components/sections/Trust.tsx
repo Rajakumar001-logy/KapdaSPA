@@ -101,7 +101,7 @@ export function Trust() {
                     <Star key={i} className="w-4 h-4 fill-lavender-400 text-lavender-400" />
                   ))}
                 </div>
-                <p className="text-lg md:text-xl text-foreground leading-relaxed font-serif italic">
+                <p className="text-lg md:text-xl text-foreground leading-relaxed font-heading font-medium">
                   &ldquo;{reviews[current].text}&rdquo;
                 </p>
                 <div className="mt-6">

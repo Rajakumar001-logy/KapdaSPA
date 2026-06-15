@@ -79,7 +79,7 @@ export function BookPickupPage() {
         className="glass-card rounded-2xl p-10 text-center max-w-md mx-auto mt-8"
       >
         <CheckCircle className="w-14 h-14 text-lavender-500 mx-auto mb-4" />
-        <h1 className="font-serif text-2xl text-foreground">Pickup Scheduled!</h1>
+        <h1 className="font-heading text-2xl text-foreground">Pickup Scheduled!</h1>
         <p className="text-muted mt-2 text-sm">
           Order <strong className="text-foreground">{success.orderNumber}</strong> has been created.
           We&apos;ll pick up your laundry on {pickupDate} between {pickupTime}.
@@ -101,7 +101,7 @@ export function BookPickupPage() {
   return (
     <div>
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="font-serif text-3xl text-foreground">Book Pickup</h1>
+        <h1 className="font-heading text-3xl text-foreground">Book Pickup</h1>
         <p className="text-muted mt-1">Schedule a doorstep laundry pickup</p>
       </motion.div>
 

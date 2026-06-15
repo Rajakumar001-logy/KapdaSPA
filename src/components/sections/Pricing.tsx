@@ -47,8 +47,6 @@ const plans = [
 export function Pricing() {
   return (
     <section id="pricing" className="section-padding bg-surface relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-lavender-200/30 dark:bg-lavender-900/20 rounded-full blur-3xl pointer-events-none" />
-
       <div className="container-narrow relative">
         <SectionHeader
           label="Pricing"
@@ -65,15 +63,15 @@ export function Pricing() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: plan.popular ? -8 : -4 }}
-              className={`relative flex flex-col p-7 md:p-8 rounded-3xl transition-shadow duration-300 ${
+              className={`relative flex flex-col p-6 md:p-8 rounded-2xl transition-shadow duration-200 ${
                 plan.popular
-                  ? 'bg-gradient-to-b from-lavender-500 to-lavender-600 text-white shadow-glow scale-[1.02] md:scale-105 z-10'
-                  : 'glass-card'
+                  ? 'bg-lavender-400 text-white shadow-glow border-2 border-lavender-400 md:scale-105 z-10'
+                  : 'glass-card hover:border-lavender-300'
               }`}
             >
               {plan.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1 px-4 py-1 rounded-full bg-white text-lavender-600 text-xs font-bold shadow-soft">
-                  <Star className="w-3 h-3 fill-lavender-500 text-lavender-500" />
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1 px-3 py-1 rounded-lg bg-foreground text-white text-xs font-bold">
+                  <Star className="w-3 h-3 fill-lavender-400 text-lavender-400" />
                   Most Popular
                 </div>
               )}

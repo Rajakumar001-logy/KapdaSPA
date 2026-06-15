@@ -69,12 +69,10 @@ export function Features() {
               key={feature.title}
               variants={item}
               whileHover={{ y: -6, transition: { duration: 0.25 } }}
-              className="group relative p-6 md:p-8 rounded-2xl glass-card cursor-default overflow-hidden"
+              className="group relative p-6 md:p-8 rounded-2xl glass-card cursor-default overflow-hidden hover:border-lavender-300 transition-colors"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-lavender-100/0 to-lavender-200/0 group-hover:from-lavender-100/40 group-hover:to-lavender-200/20 dark:group-hover:from-lavender-900/20 dark:group-hover:to-lavender-800/10 transition-all duration-500 rounded-2xl" />
-
               <motion.div
-                className="relative w-12 h-12 rounded-xl bg-lavender-100 dark:bg-lavender-900/40 flex items-center justify-center mb-5 group-hover:bg-lavender-500 transition-colors duration-300"
+                className="relative w-12 h-12 rounded-xl bg-lavender-100 dark:bg-lavender-900 flex items-center justify-center mb-5 group-hover:bg-lavender-500 transition-colors duration-300"
                 whileHover={{ rotate: [0, -8, 8, 0] }}
                 transition={{ duration: 0.5 }}
               >
@@ -90,11 +88,10 @@ export function Features() {
           <motion.article
             variants={item}
             whileHover={{ y: -6 }}
-            className="sm:col-span-2 lg:col-span-1 group relative p-6 md:p-8 rounded-2xl bg-gradient-to-br from-lavender-500 to-lavender-600 text-white overflow-hidden"
+            className="sm:col-span-2 lg:col-span-1 group relative p-6 md:p-8 rounded-2xl bg-lavender-400 text-white overflow-hidden"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
             <p className="text-lavender-100 text-sm font-medium mb-2">Trusted by thousands</p>
-            <p className="font-serif text-2xl leading-snug">
+            <p className="font-heading text-2xl leading-snug">
               Join 2,000+ customers who never worry about laundry again.
             </p>
           </motion.article>

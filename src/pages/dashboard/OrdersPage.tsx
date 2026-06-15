@@ -37,7 +37,7 @@ export function OrdersPage() {
   return (
     <div>
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="font-serif text-3xl text-foreground">Order History</h1>
+        <h1 className="font-heading text-3xl text-foreground">Order History</h1>
         <p className="text-muted mt-1">View and track all your laundry orders</p>
       </motion.div>
 

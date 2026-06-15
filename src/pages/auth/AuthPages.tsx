@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Sparkles, Mail, Lock, User, ArrowRight } from 'lucide-react'
+import { Mail, Lock, User, ArrowRight } from 'lucide-react'
+import { Logo } from '../../components/ui/Logo'
 import { useState, useEffect, type FormEvent } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
@@ -40,17 +41,12 @@ export function LoginPage() {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
       >
-        <Link to="/" className="flex items-center justify-center gap-2 mb-8">
-          <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-lavender-500 text-white">
-            <Sparkles className="w-5 h-5" />
-          </span>
-          <span className="font-serif text-2xl text-foreground">
-            Kapda<span className="text-lavender-500">SPA</span>
-          </span>
-        </Link>
+        <div className="flex justify-center mb-8">
+          <Logo size="lg" />
+        </div>
 
         <div className="glass-card rounded-3xl p-8 md:p-10">
-          <h1 className="font-serif text-3xl text-foreground text-center">Welcome back</h1>
+          <h1 className="font-heading text-3xl text-foreground text-center">Welcome back</h1>
           <p className="text-muted text-center mt-2 text-sm">Sign in to manage your laundry</p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-5">
@@ -149,19 +145,14 @@ export function RegisterPage() {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
       >
-        <Link to="/" className="flex items-center justify-center gap-2 mb-8">
-          <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-lavender-500 text-white">
-            <Sparkles className="w-5 h-5" />
-          </span>
-          <span className="font-serif text-2xl text-foreground">
-            Kapda<span className="text-lavender-500">SPA</span>
-          </span>
-        </Link>
+        <div className="flex justify-center mb-8">
+          <Logo size="lg" />
+        </div>
 
         <div className="glass-card rounded-3xl p-8 md:p-10">
           {success ? (
             <div className="text-center">
-              <h1 className="font-serif text-2xl text-foreground">Check your email</h1>
+              <h1 className="font-heading text-2xl text-foreground">Check your email</h1>
               <p className="text-muted mt-3 text-sm leading-relaxed">
                 We sent a confirmation link to <strong className="text-foreground">{email}</strong>.
                 Click it to activate your account, then sign in.
@@ -172,7 +163,7 @@ export function RegisterPage() {
             </div>
           ) : (
             <>
-              <h1 className="font-serif text-3xl text-foreground text-center">Create account</h1>
+              <h1 className="font-heading text-3xl text-foreground text-center">Create account</h1>
               <p className="text-muted text-center mt-2 text-sm">Start your effortless laundry journey</p>
 
               <form onSubmit={handleSubmit} className="mt-8 space-y-5">

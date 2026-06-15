@@ -61,7 +61,7 @@ export function OrderDetailPage() {
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
-            <h1 className="font-serif text-3xl text-foreground">{order.order_number}</h1>
+            <h1 className="font-heading text-3xl text-foreground">{order.order_number}</h1>
             <p className="text-muted mt-1">{SERVICE_LABELS[order.service_type]}</p>
           </div>
           <span

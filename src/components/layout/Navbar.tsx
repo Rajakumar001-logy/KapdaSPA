@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Moon, Sun, Sparkles, User } from 'lucide-react'
+import { Menu, X, Moon, Sun, User } from 'lucide-react'
 import { Button } from '../ui/Button'
+import { Logo } from '../ui/Logo'
 import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 
@@ -15,18 +16,12 @@ const navLinks = [
 ]
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const { theme, toggleTheme } = useTheme()
   const { user, loading } = useAuth()
   const location = useLocation()
   const isLanding = location.pathname === '/'
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
@@ -37,25 +32,10 @@ export function Navbar() {
   const bookLabel = user ? 'Book Pickup' : 'Sign In'
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'py-3' : 'py-5'
-      }`}
-    >
-      <div className="container-narrow px-5 sm:px-8 lg:px-12 xl:px-16">
-        <nav
-          className={`flex items-center justify-between rounded-2xl px-5 py-3 transition-all duration-500 ${
-            scrolled ? 'glass shadow-soft' : 'bg-transparent'
-          }`}
-        >
-          <Link to="/" className="flex items-center gap-2 group">
-            <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-lavender-500 text-white shadow-glow group-hover:scale-105 transition-transform">
-              <Sparkles className="w-4 h-4" />
-            </span>
-            <span className="font-serif text-xl text-foreground tracking-tight">
-              Kapda<span className="text-lavender-500">SPA</span>
-            </span>
-          </Link>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-surface/95 border-b border-border backdrop-blur-sm">
+      <div className="container-narrow px-4 sm:px-6 lg:px-8">
+        <nav className="flex items-center justify-between h-[4.5rem]">
+          <Logo size="md" />
 
           {isLanding && (
             <ul className="hidden lg:flex items-center gap-8">
@@ -63,7 +43,7 @@ export function Navbar() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-sm font-medium text-muted hover:text-lavender-600 transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-lavender-500 after:transition-all hover:after:w-full"
+                    className="text-sm font-medium text-muted hover:text-lavender-500 transition-colors"
                   >
                     {link.label}
                   </a>
@@ -137,7 +117,7 @@ export function Navbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="lg:hidden fixed inset-x-0 top-[72px] bottom-0 bg-surface/95 backdrop-blur-xl z-40 px-6 py-8"
+            className="lg:hidden fixed inset-x-0 top-16 bottom-0 bg-surface border-t border-border z-40 px-6 py-8"
           >
             {isLanding && (
               <ul className="flex flex-col gap-6">
