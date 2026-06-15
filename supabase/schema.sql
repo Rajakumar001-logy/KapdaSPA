@@ -8,6 +8,7 @@ create table if not exists public.profiles (
   address text,
   city text,
   pin_code text,
+  location_status text check (location_status in ('served', 'unserved')),
   created_at timestamptz default now() not null,
   updated_at timestamptz default now() not null
 );

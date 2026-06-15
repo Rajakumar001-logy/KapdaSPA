@@ -3,6 +3,7 @@ import { ThemeProvider } from './context/ThemeContext'
 import { AuthProvider } from './context/AuthContext'
 import { BubbleBurstProvider } from './context/BubbleBurstContext'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
+import { LocationGate } from './components/auth/LocationGate'
 import { LandingPage } from './pages/LandingPage'
 import { LoginPage, RegisterPage } from './pages/auth/AuthPages'
 import { DashboardLayout } from './pages/dashboard/DashboardLayout'
@@ -11,6 +12,7 @@ import { ProfilePage } from './pages/dashboard/ProfilePage'
 import { OrdersPage } from './pages/dashboard/OrdersPage'
 import { OrderDetailPage } from './pages/dashboard/OrderDetailPage'
 import { BookPickupPage } from './pages/dashboard/BookPickupPage'
+import { LocationPage } from './pages/dashboard/LocationPage'
 
 function App() {
   return (
@@ -30,11 +32,14 @@ function App() {
                 </ProtectedRoute>
               }
             >
-              <Route index element={<OverviewPage />} />
-              <Route path="profile" element={<ProfilePage />} />
-              <Route path="orders" element={<OrdersPage />} />
-              <Route path="orders/:id" element={<OrderDetailPage />} />
-              <Route path="book" element={<BookPickupPage />} />
+              <Route path="location" element={<LocationPage />} />
+              <Route element={<LocationGate />}>
+                <Route index element={<OverviewPage />} />
+                <Route path="profile" element={<ProfilePage />} />
+                <Route path="orders" element={<OrdersPage />} />
+                <Route path="orders/:id" element={<OrderDetailPage />} />
+                <Route path="book" element={<BookPickupPage />} />
+              </Route>
             </Route>
           </Routes>
           </BrowserRouter>

@@ -5,7 +5,8 @@ import { ArrowLeft, Calendar, MapPin, Package } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
 import type { Order } from '../../types/database'
-import { SERVICE_LABELS, STATUS_LABELS } from '../../types/database'
+import { orderServiceLabel, STATUS_LABELS } from '../../types/database'
+import { formatPrice } from '../../lib/location'
 import { OrderTracker } from '../../components/dashboard/OrderTracker'
 
 export function OrderDetailPage() {
@@ -62,7 +63,10 @@ export function OrderDetailPage() {
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <h1 className="font-heading text-3xl text-foreground">{order.order_number}</h1>
-            <p className="text-muted mt-1">{SERVICE_LABELS[order.service_type]}</p>
+            <p className="text-muted mt-1">{orderServiceLabel(order)}</p>
+            {order.laundry_name && (
+              <p className="text-sm text-muted mt-0.5">via {order.laundry_name}</p>
+            )}
           </div>
           <span
             className={`self-start text-sm font-semibold px-4 py-1.5 rounded-full ${
@@ -118,10 +122,25 @@ export function OrderDetailPage() {
               </div>
             </div>
 
-            <div className="pt-2 border-t border-border">
+            <div className="pt-2 border-t border-border space-y-2">
               <p className="text-sm text-muted">
                 <span className="font-medium text-foreground">{order.item_count}</span> items
               </p>
+              {order.service_price != null && (
+                <p className="text-sm text-muted">
+                  Service: <span className="font-medium text-foreground">{formatPrice(order.service_price)}</span>
+                </p>
+              )}
+              {order.delivery_charge != null && (
+                <p className="text-sm text-muted">
+                  Delivery: <span className="font-medium text-foreground">{formatPrice(order.delivery_charge)}</span>
+                </p>
+              )}
+              {order.total_amount != null && (
+                <p className="text-sm font-semibold text-foreground">
+                  Total: {formatPrice(order.total_amount)}
+                </p>
+              )}
               {order.notes && (
                 <p className="text-sm text-muted mt-2">
                   <span className="font-medium text-foreground">Notes:</span> {order.notes}

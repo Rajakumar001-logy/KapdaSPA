@@ -1,5 +1,5 @@
-import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, Package, User, PlusCircle, LogOut, Moon, Sun } from 'lucide-react'
+import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom'
+import { LayoutDashboard, Package, User, PlusCircle, LogOut, Moon, Sun, MapPin } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { Logo } from '../../components/ui/Logo'
@@ -29,6 +29,15 @@ export function DashboardLayout() {
           <Logo size="sm" />
 
           <div className="flex items-center gap-2">
+            {profile?.city && (
+              <Link
+                to="/dashboard/location"
+                className="text-xs text-muted hidden md:flex items-center gap-1 hover:text-foreground"
+              >
+                <MapPin className="w-3.5 h-3.5" />
+                {profile.city}
+              </Link>
+            )}
             <span className="text-sm text-muted hidden md:block">
               Hi, {profile?.full_name?.split(' ')[0] ?? 'there'}
             </span>

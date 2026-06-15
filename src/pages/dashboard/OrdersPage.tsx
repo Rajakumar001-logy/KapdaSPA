@@ -5,7 +5,7 @@ import { Package } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
 import type { Order } from '../../types/database'
-import { SERVICE_LABELS, STATUS_LABELS } from '../../types/database'
+import { STATUS_LABELS, orderServiceLabel } from '../../types/database'
 import { OrderTracker } from '../../components/dashboard/OrderTracker'
 
 export function OrdersPage() {
@@ -82,7 +82,7 @@ export function OrdersPage() {
                 <div>
                   <p className="font-semibold text-foreground">{order.order_number}</p>
                   <p className="text-sm text-muted mt-0.5">
-                    {SERVICE_LABELS[order.service_type]} · {order.item_count} items
+                    {orderServiceLabel(order)} · {order.item_count} items
                   </p>
                   <p className="text-xs text-muted mt-1">
                     Pickup: {order.pickup_date} at {order.pickup_time}

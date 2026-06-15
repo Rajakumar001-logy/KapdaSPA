@@ -5,12 +5,12 @@ import { Package, PlusCircle, ArrowRight } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
 import type { Order } from '../../types/database'
-import { SERVICE_LABELS, STATUS_LABELS } from '../../types/database'
+import { STATUS_LABELS, orderServiceLabel } from '../../types/database'
 import { OrderTracker } from '../../components/dashboard/OrderTracker'
 import { Button } from '../../components/ui/Button'
 
 export function OverviewPage() {
-  const { user } = useAuth()
+  const { user, profile } = useAuth()
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -40,8 +40,15 @@ export function OverviewPage() {
         <p className="text-muted mt-1">Manage your laundry orders and bookings</p>
       </motion.div>
 
+      {profile?.location_status === 'unserved' && (
+        <div className="mt-6 p-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200/60 dark:border-amber-800/40 text-sm text-amber-800 dark:text-amber-300">
+          We&apos;re not in {profile.city} yet — we&apos;ll be live soon. Booking is unavailable for now.
+        </div>
+      )}
+
       <div className="mt-8 grid gap-6">
         {/* Quick action */}
+        {profile?.location_status === 'served' && (
         <div className="glass-card rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h2 className="font-semibold text-foreground">Need a pickup?</h2>
@@ -54,6 +61,7 @@ export function OverviewPage() {
             </Button>
           </Link>
         </div>
+        )}
 
         {/* Active order tracking */}
         {activeOrder ? (
@@ -65,7 +73,7 @@ export function OverviewPage() {
                 </p>
                 <h2 className="font-heading text-2xl text-foreground mt-1">{activeOrder.order_number}</h2>
                 <p className="text-sm text-muted mt-1">
-                  {SERVICE_LABELS[activeOrder.service_type]} · {STATUS_LABELS[activeOrder.status]}
+                  {orderServiceLabel(activeOrder)} · {STATUS_LABELS[activeOrder.status]}
                 </p>
               </div>
               <Link
@@ -113,7 +121,7 @@ export function OverviewPage() {
                     <div>
                       <p className="font-medium text-foreground">{order.order_number}</p>
                       <p className="text-sm text-muted">
-                        {SERVICE_LABELS[order.service_type]} · {order.pickup_date}
+                        {orderServiceLabel(order)} · {order.pickup_date}
                       </p>
                     </div>
                     <span

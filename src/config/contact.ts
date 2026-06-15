@@ -20,7 +20,10 @@ export const contactConfig = {
   address: 'KapdaSPA HQ, Lucknow, India',
 
   /** Cities where service is currently live */
-  servingCities: ['Delhi', 'Noida', 'Gurgaon', 'Lucknow', 'Raipur', 'Bilaspur'],
+  servingCities: ['Delhi', 'Noida', 'Gurgaon', 'Lucknow', 'Raipur'],
+
+  /** Flat delivery charge added to every order (INR) */
+  deliveryCharge: 49,
 
   /** Social media — set href to your profile URL or leave as # */
   social: {
