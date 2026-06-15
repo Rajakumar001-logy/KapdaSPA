@@ -7,7 +7,10 @@ import {
   type ReactNode,
 } from 'react'
 import type { User, Session } from '@supabase/supabase-js'
-import { supabase } from '../lib/supabase'
+import { isSupabaseConfigured, supabase } from '../lib/supabase'
+
+const AUTH_UNAVAILABLE =
+  'Sign-in is temporarily unavailable. Please try again later or contact support at kapdaspa@gmail.com.'
 import type { Profile } from '../types/database'
 
 interface AuthContextValue {
@@ -75,6 +78,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [user])
 
   const signUp = async (email: string, password: string, fullName: string) => {
+    if (!isSupabaseConfigured) return { error: AUTH_UNAVAILABLE }
+
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -84,6 +89,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const signIn = async (email: string, password: string) => {
+    if (!isSupabaseConfigured) return { error: AUTH_UNAVAILABLE }
+
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     return { error: error?.message ?? null }
   }
