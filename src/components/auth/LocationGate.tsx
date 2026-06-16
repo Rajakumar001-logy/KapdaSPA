@@ -1,9 +1,9 @@
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
-export function LocationGate() {
+/** Only required before booking a pickup — not for overview, profile, or orders. */
+export function BookLocationGate() {
   const { profile, loading } = useAuth()
-  const location = useLocation()
 
   if (loading) {
     return (
@@ -13,8 +13,8 @@ export function LocationGate() {
     )
   }
 
-  if (!profile?.city && location.pathname !== '/dashboard/location') {
-    return <Navigate to="/dashboard/location" replace />
+  if (!profile?.city) {
+    return <Navigate to="/dashboard/location" replace state={{ from: '/dashboard/book' }} />
   }
 
   return <Outlet />

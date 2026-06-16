@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { MapPin, ArrowRight, AlertCircle, Sparkles } from 'lucide-react'
 import { contactConfig } from '../../config/contact'
@@ -10,6 +10,8 @@ import { Button } from '../../components/ui/Button'
 export function LocationPage() {
   const { profile, updateProfile } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const returnTo = (location.state as { from?: string })?.from ?? '/dashboard/book'
   const [cityInput, setCityInput] = useState(profile?.city ?? '')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -43,7 +45,7 @@ export function LocationPage() {
     }
 
     if (served) {
-      navigate('/dashboard/book', { replace: true })
+      navigate(returnTo, { replace: true })
     } else {
       setUnservedCity(input)
     }
@@ -99,6 +101,12 @@ export function LocationPage() {
       className="max-w-lg mx-auto mt-4"
     >
       <div className="glass-card rounded-3xl p-8 md:p-10">
+        <Link
+          to="/dashboard"
+          className="text-sm text-muted hover:text-foreground mb-4 inline-block"
+        >
+          ← Back to dashboard
+        </Link>
         <div className="flex items-center gap-3 mb-2">
           <div className="w-12 h-12 rounded-2xl bg-lavender-100 dark:bg-lavender-900/30 flex items-center justify-center">
             <MapPin className="w-6 h-6 text-lavender-600" />

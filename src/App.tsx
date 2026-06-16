@@ -3,7 +3,7 @@ import { ThemeProvider } from './context/ThemeContext'
 import { AuthProvider } from './context/AuthContext'
 import { BubbleBurstProvider } from './context/BubbleBurstContext'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
-import { LocationGate } from './components/auth/LocationGate'
+import { BookLocationGate } from './components/auth/LocationGate'
 import { LandingPage } from './pages/LandingPage'
 import { LoginPage, RegisterPage } from './pages/auth/AuthPages'
 import { DashboardLayout } from './pages/dashboard/DashboardLayout'
@@ -32,12 +32,12 @@ function App() {
                 </ProtectedRoute>
               }
             >
+              <Route index element={<OverviewPage />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="orders" element={<OrdersPage />} />
+              <Route path="orders/:id" element={<OrderDetailPage />} />
               <Route path="location" element={<LocationPage />} />
-              <Route element={<LocationGate />}>
-                <Route index element={<OverviewPage />} />
-                <Route path="profile" element={<ProfilePage />} />
-                <Route path="orders" element={<OrdersPage />} />
-                <Route path="orders/:id" element={<OrderDetailPage />} />
+              <Route element={<BookLocationGate />}>
                 <Route path="book" element={<BookPickupPage />} />
               </Route>
             </Route>

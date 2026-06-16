@@ -9,6 +9,8 @@ interface LogoProps {
   className?: string
   /** Light text for dark backgrounds (footer) */
   light?: boolean
+  /** Footer styling: white text on black (light mode), dark text on white (dark mode) */
+  footer?: boolean
 }
 
 const sizeMap: Record<LogoSize, { img: string; text: string; gap: string }> = {
@@ -23,8 +25,18 @@ export function Logo({
   to = '/',
   className = '',
   light = false,
+  footer = false,
 }: LogoProps) {
   const s = sizeMap[size]
+
+  const kapdaClass = footer
+    ? 'text-white dark:text-slate-900'
+    : light
+      ? 'text-white'
+      : 'text-foreground'
+  const spaClass = footer
+    ? 'text-lavender-300 dark:text-lavender-600 italic'
+    : `text-lavender-400 italic ${light ? 'text-lavender-300' : ''}`
 
   const content = (
     <>
@@ -34,9 +46,9 @@ export function Logo({
         className={`${s.img} object-contain shrink-0 rounded-lg`}
       />
       {showText && (
-        <span className={`font-brand ${s.text} leading-none tracking-tight ${light ? 'text-white' : ''}`}>
-          <span className={light ? 'text-white' : 'text-foreground'}>Kapda</span>
-          <span className={`text-lavender-400 italic ${light ? 'text-lavender-300' : ''}`}>SPA</span>
+        <span className={`font-brand ${s.text} leading-none tracking-tight`}>
+          <span className={kapdaClass}>Kapda</span>
+          <span className={spaClass}>SPA</span>
         </span>
       )}
     </>
