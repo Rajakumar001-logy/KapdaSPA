@@ -6,7 +6,6 @@ import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
 import type { Order } from '../../types/database'
 import { STATUS_LABELS, orderServiceLabel } from '../../types/database'
-import { OrderTracker } from '../../components/dashboard/OrderTracker'
 
 export function OrdersPage() {
   const { user } = useAuth()
@@ -38,7 +37,7 @@ export function OrdersPage() {
     <div>
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="font-heading text-3xl text-foreground">Order History</h1>
-        <p className="text-muted mt-1">View and track all your laundry orders</p>
+        <p className="text-muted mt-1">View all your laundry orders</p>
       </motion.div>
 
       <div className="mt-6 flex gap-2">
@@ -99,9 +98,6 @@ export function OrdersPage() {
                 >
                   {STATUS_LABELS[order.status]}
                 </span>
-              </div>
-              <div className="mt-4">
-                <OrderTracker status={order.status} compact />
               </div>
             </Link>
           ))

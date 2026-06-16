@@ -7,7 +7,6 @@ import { useAuth } from '../../context/AuthContext'
 import type { Order } from '../../types/database'
 import { orderServiceLabel, STATUS_LABELS } from '../../types/database'
 import { formatPrice } from '../../lib/location'
-import { OrderTracker } from '../../components/dashboard/OrderTracker'
 
 export function OrderDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -82,71 +81,64 @@ export function OrderDetailPage() {
         </div>
       </motion.div>
 
-      <div className="mt-8 grid lg:grid-cols-2 gap-6">
-        <div className="glass-card rounded-2xl p-6 md:p-8">
-          <h2 className="font-semibold text-foreground mb-6">Track Order</h2>
-          <OrderTracker status={order.status} />
-        </div>
+      <div className="mt-8 max-w-xl">
+        <div className="glass-card rounded-2xl p-6 space-y-4">
+          <h2 className="font-semibold text-foreground">Order Details</h2>
 
-        <div className="space-y-4">
-          <div className="glass-card rounded-2xl p-6 space-y-4">
-            <h2 className="font-semibold text-foreground">Order Details</h2>
-
-            <div className="flex items-start gap-3">
-              <Calendar className="w-4 h-4 text-lavender-500 mt-0.5 shrink-0" />
-              <div>
-                <p className="text-sm font-medium text-foreground">Pickup</p>
-                <p className="text-sm text-muted">
-                  {order.pickup_date} · {order.pickup_time}
-                </p>
-              </div>
-            </div>
-
-            {order.estimated_delivery && (
-              <div className="flex items-start gap-3">
-                <Package className="w-4 h-4 text-lavender-500 mt-0.5 shrink-0" />
-                <div>
-                  <p className="text-sm font-medium text-foreground">Est. Delivery</p>
-                  <p className="text-sm text-muted">
-                    {new Date(order.estimated_delivery).toLocaleString()}
-                  </p>
-                </div>
-              </div>
-            )}
-
-            <div className="flex items-start gap-3">
-              <MapPin className="w-4 h-4 text-lavender-500 mt-0.5 shrink-0" />
-              <div>
-                <p className="text-sm font-medium text-foreground">Address</p>
-                <p className="text-sm text-muted">{order.address}</p>
-              </div>
-            </div>
-
-            <div className="pt-2 border-t border-border space-y-2">
+          <div className="flex items-start gap-3">
+            <Calendar className="w-4 h-4 text-lavender-500 mt-0.5 shrink-0" />
+            <div>
+              <p className="text-sm font-medium text-foreground">Pickup</p>
               <p className="text-sm text-muted">
-                <span className="font-medium text-foreground">{order.item_count}</span> items
+                {order.pickup_date} · {order.pickup_time}
               </p>
-              {order.service_price != null && (
-                <p className="text-sm text-muted">
-                  Service: <span className="font-medium text-foreground">{formatPrice(order.service_price)}</span>
-                </p>
-              )}
-              {order.delivery_charge != null && (
-                <p className="text-sm text-muted">
-                  Delivery: <span className="font-medium text-foreground">{formatPrice(order.delivery_charge)}</span>
-                </p>
-              )}
-              {order.total_amount != null && (
-                <p className="text-sm font-semibold text-foreground">
-                  Total: {formatPrice(order.total_amount)}
-                </p>
-              )}
-              {order.notes && (
-                <p className="text-sm text-muted mt-2">
-                  <span className="font-medium text-foreground">Notes:</span> {order.notes}
-                </p>
-              )}
             </div>
+          </div>
+
+          {order.estimated_delivery && (
+            <div className="flex items-start gap-3">
+              <Package className="w-4 h-4 text-lavender-500 mt-0.5 shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-foreground">Est. Delivery</p>
+                <p className="text-sm text-muted">
+                  {new Date(order.estimated_delivery).toLocaleString()}
+                </p>
+              </div>
+            </div>
+          )}
+
+          <div className="flex items-start gap-3">
+            <MapPin className="w-4 h-4 text-lavender-500 mt-0.5 shrink-0" />
+            <div>
+              <p className="text-sm font-medium text-foreground">Address</p>
+              <p className="text-sm text-muted">{order.address}</p>
+            </div>
+          </div>
+
+          <div className="pt-2 border-t border-border space-y-2">
+            <p className="text-sm text-muted">
+              <span className="font-medium text-foreground">{order.item_count}</span> items
+            </p>
+            {order.service_price != null && (
+              <p className="text-sm text-muted">
+                Service: <span className="font-medium text-foreground">{formatPrice(order.service_price)}</span>
+              </p>
+            )}
+            {order.delivery_charge != null && (
+              <p className="text-sm text-muted">
+                Delivery: <span className="font-medium text-foreground">{formatPrice(order.delivery_charge)}</span>
+              </p>
+            )}
+            {order.total_amount != null && (
+              <p className="text-sm font-semibold text-foreground">
+                Total: {formatPrice(order.total_amount)}
+              </p>
+            )}
+            {order.notes && (
+              <p className="text-sm text-muted mt-2">
+                <span className="font-medium text-foreground">Notes:</span> {order.notes}
+              </p>
+            )}
           </div>
         </div>
       </div>

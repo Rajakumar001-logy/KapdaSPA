@@ -187,7 +187,7 @@ export function BookPickupPage() {
         </p>
         <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
           <Button onClick={() => navigate(`/dashboard/orders/${success.id}`)} className="!rounded-xl">
-            Track Order
+            View Order
           </Button>
           <Button variant="secondary" onClick={() => navigate('/dashboard')} className="!rounded-xl">
             Go to Dashboard

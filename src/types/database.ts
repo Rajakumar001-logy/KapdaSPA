@@ -162,12 +162,3 @@ export const STATUS_LABELS: Record<OrderStatus, string> = {
   delivered: 'Delivered',
   cancelled: 'Cancelled',
 }
-
-export const STATUS_STEPS: OrderStatus[] = [
-  'scheduled',
-  'picked_up',
-  'cleaning',
-  'ready',
-  'out_for_delivery',
-  'delivered',
-]

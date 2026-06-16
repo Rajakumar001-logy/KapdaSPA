@@ -6,7 +6,6 @@ import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
 import type { Order } from '../../types/database'
 import { STATUS_LABELS, orderServiceLabel } from '../../types/database'
-import { OrderTracker } from '../../components/dashboard/OrderTracker'
 import { Button } from '../../components/ui/Button'
 
 export function OverviewPage() {
@@ -63,10 +62,10 @@ export function OverviewPage() {
         </div>
         )}
 
-        {/* Active order tracking */}
+        {/* Active order */}
         {activeOrder ? (
           <div className="glass-card rounded-2xl p-6 md:p-8">
-            <div className="flex items-start justify-between gap-4 mb-6">
+            <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-lavender-500">
                   Active Order
@@ -83,7 +82,6 @@ export function OverviewPage() {
                 Details <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            <OrderTracker status={activeOrder.status} />
           </div>
         ) : !loading ? (
           <div className="glass-card rounded-2xl p-8 text-center">
@@ -135,9 +133,6 @@ export function OverviewPage() {
                     >
                       {STATUS_LABELS[order.status]}
                     </span>
-                  </div>
-                  <div className="mt-3">
-                    <OrderTracker status={order.status} compact />
                   </div>
                 </Link>
               ))}
