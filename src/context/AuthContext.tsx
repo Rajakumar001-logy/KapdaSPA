@@ -96,13 +96,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const updateProfile = async (updates: Partial<Profile>) => {
     if (!user) return { error: 'Not authenticated' }
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('profiles')
-      .update(updates)
-      .eq('id', user.id)
+      .upsert({ id: user.id, ...updates }, { onConflict: 'id' })
+      .select()
+      .single()
 
-    if (!error) await refreshProfile()
-    return { error: error?.message ?? null }
+    if (error) {
+      if (error.message.includes('location_status')) {
+        return {
+          error:
+            'Missing location_status column. Run supabase/profile-fix.sql in Supabase SQL Editor, then try again.',
+        }
+      }
+      return { error: error.message }
+    }
+
+    if (data) setProfile(data as Profile)
+    return { error: null }
   }
 
   return (

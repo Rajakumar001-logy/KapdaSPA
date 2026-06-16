@@ -29,25 +29,30 @@ export function LocationPage() {
     }
 
     setSubmitting(true)
-    const servedCity = resolveServingCity(input)
-    const served = servedCity !== null
 
-    const { error: err } = await updateProfile({
-      city: served ? servedCity : input,
-      location_status: served ? 'served' : 'unserved',
-    })
+    try {
+      const servedCity = resolveServingCity(input)
+      const served = servedCity !== null
 
-    setSubmitting(false)
+      const { error: err } = await updateProfile({
+        city: served ? servedCity : input,
+        location_status: served ? 'served' : 'unserved',
+      })
 
-    if (err) {
-      setError(err)
-      return
-    }
+      if (err) {
+        setError(err)
+        return
+      }
 
-    if (served) {
-      navigate(returnTo, { replace: true })
-    } else {
-      setUnservedCity(input)
+      if (served) {
+        navigate(returnTo, { replace: true })
+      } else {
+        setUnservedCity(input)
+      }
+    } catch {
+      setError('Something went wrong. Please check your connection and try again.')
+    } finally {
+      setSubmitting(false)
     }
   }
 
