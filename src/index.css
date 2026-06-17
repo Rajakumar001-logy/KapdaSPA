@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 @theme {
   --font-sans: "DM Sans", system-ui, sans-serif;
   --font-heading: "Plus Jakarta Sans", system-ui, sans-serif;
@@ -21,24 +19,13 @@
 
   --color-surface: #ffffff;
   --color-surface-muted: #f8fafc;
-  --color-foreground: #1e293b;
-  --color-muted: #64748b;
+  --color-foreground: #000000;
+  --color-muted: #000000;
   --color-border: #e2e8f0;
 
   --shadow-soft: 0 1px 3px rgba(30, 41, 59, 0.06), 0 4px 12px rgba(30, 41, 59, 0.04);
   --shadow-glow: 0 4px 20px -4px rgba(167, 139, 250, 0.45);
   --shadow-card: 0 1px 2px rgba(30, 41, 59, 0.05), 0 8px 24px -8px rgba(30, 41, 59, 0.08);
-}
-
-.dark {
-  --color-surface: #0f172a;
-  --color-surface-muted: #1e293b;
-  --color-foreground: #f1f5f9;
-  --color-muted: #94a3b8;
-  --color-border: #334155;
-  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-glow: 0 4px 20px -4px rgba(167, 139, 250, 0.25);
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.25), 0 8px 24px -8px rgba(0, 0, 0, 0.3);
 }
 
 @layer base {
@@ -58,10 +45,6 @@
   ::selection {
     @apply bg-lavender-200 text-lavender-900;
   }
-
-  .dark ::selection {
-    @apply bg-lavender-700 text-lavender-100;
-  }
 }
 
 @layer utilities {
@@ -69,17 +52,9 @@
     @apply bg-surface border border-border shadow-soft;
   }
 
-  .dark .glass {
-    @apply bg-surface border-border;
-  }
-
   .glass-card {
     @apply bg-surface border border-border;
     box-shadow: var(--shadow-card);
-  }
-
-  .dark .glass-card {
-    @apply bg-surface-muted border-border;
   }
 
   .text-gradient {

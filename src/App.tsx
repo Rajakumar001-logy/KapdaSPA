@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { ThemeProvider } from './context/ThemeContext'
 import { AuthProvider } from './context/AuthContext'
 import { BubbleBurstProvider } from './context/BubbleBurstContext'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
@@ -16,11 +15,10 @@ import { LocationPage } from './pages/dashboard/LocationPage'
 
 function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <BubbleBurstProvider>
-          <BrowserRouter>
-          <Routes>
+    <AuthProvider>
+      <BubbleBurstProvider>
+        <BrowserRouter>
+        <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
@@ -42,10 +40,9 @@ function App() {
               </Route>
             </Route>
           </Routes>
-          </BrowserRouter>
-        </BubbleBurstProvider>
-      </AuthProvider>
-    </ThemeProvider>
+        </BrowserRouter>
+      </BubbleBurstProvider>
+    </AuthProvider>
   )
 }
 

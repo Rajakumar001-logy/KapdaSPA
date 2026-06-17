@@ -37,8 +37,8 @@ export function Hero() {
                 Book Pickup
                 <ArrowRight className="w-4 h-4" />
               </Button>
-              <Button href="#pricing" variant="secondary">
-                View Pricing
+              <Button href="#services" variant="secondary">
+                View Services
               </Button>
             </div>
 

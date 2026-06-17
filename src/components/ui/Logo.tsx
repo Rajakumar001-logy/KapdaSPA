@@ -30,12 +30,12 @@ export function Logo({
   const s = sizeMap[size]
 
   const kapdaClass = footer
-    ? 'text-white dark:text-slate-900'
+    ? 'text-white'
     : light
       ? 'text-white'
       : 'text-foreground'
   const spaClass = footer
-    ? 'text-lavender-300 dark:text-lavender-600 italic'
+    ? 'text-lavender-300 italic'
     : `text-lavender-400 italic ${light ? 'text-lavender-300' : ''}`
 
   const content = (

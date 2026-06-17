@@ -1,23 +1,20 @@
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Moon, Sun, User } from 'lucide-react'
+import { Menu, X, User } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { Logo } from '../ui/Logo'
-import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 
 const navLinks = [
   { label: 'Features', href: '#features' },
   { label: 'How It Works', href: '#how-it-works' },
   { label: 'Services', href: '#services' },
-  { label: 'Pricing', href: '#pricing' },
   { label: 'FAQ', href: '#faq' },
 ]
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const { theme, toggleTheme } = useTheme()
   const { user, loading } = useAuth()
   const location = useLocation()
   const isLanding = location.pathname === '/'
@@ -53,19 +50,6 @@ export function Navbar() {
           )}
 
           <div className="hidden lg:flex items-center gap-3">
-            <button
-              type="button"
-              onClick={toggleTheme}
-              aria-label="Toggle dark mode"
-              className="p-2.5 rounded-full hover:bg-lavender-100 dark:hover:bg-white/10 transition-colors"
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-lavender-300" />
-              ) : (
-                <Moon className="w-4 h-4 text-lavender-600" />
-              )}
-            </button>
-
             {!loading && (
               <>
                 {user ? (
@@ -93,17 +77,9 @@ export function Navbar() {
           <div className="flex lg:hidden items-center gap-2">
             <button
               type="button"
-              onClick={toggleTheme}
-              aria-label="Toggle dark mode"
-              className="p-2 rounded-full hover:bg-lavender-100 dark:hover:bg-white/10"
-            >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
-            <button
-              type="button"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-              className="p-2 rounded-full hover:bg-lavender-100 dark:hover:bg-white/10"
+              className="p-2 rounded-full hover:bg-lavender-100"
             >
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>

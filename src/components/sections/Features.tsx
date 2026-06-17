@@ -72,11 +72,11 @@ export function Features() {
               className="group relative p-6 md:p-8 rounded-2xl glass-card cursor-default overflow-hidden hover:border-lavender-300 transition-colors"
             >
               <motion.div
-                className="relative w-12 h-12 rounded-xl bg-lavender-100 dark:bg-lavender-900 flex items-center justify-center mb-5 group-hover:bg-lavender-500 transition-colors duration-300"
+                className="relative w-12 h-12 rounded-xl bg-lavender-100 flex items-center justify-center mb-5 group-hover:bg-lavender-200 transition-colors duration-300"
                 whileHover={{ rotate: [0, -8, 8, 0] }}
                 transition={{ duration: 0.5 }}
               >
-                <feature.icon className="w-6 h-6 text-lavender-600 group-hover:text-white transition-colors duration-300" />
+                <feature.icon className="w-6 h-6 text-lavender-400 group-hover:text-lavender-500 transition-colors duration-300" strokeWidth={1.75} />
               </motion.div>
 
               <h3 className="relative text-lg font-semibold text-foreground mb-2">{feature.title}</h3>

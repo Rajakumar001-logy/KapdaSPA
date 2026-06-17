@@ -1,7 +1,6 @@
 import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom'
-import { LayoutDashboard, Package, User, PlusCircle, LogOut, Moon, Sun, MapPin } from 'lucide-react'
+import { LayoutDashboard, Package, User, PlusCircle, LogOut, MapPin } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
-import { useTheme } from '../../context/ThemeContext'
 import { Logo } from '../../components/ui/Logo'
 
 const navItems = [
@@ -13,7 +12,6 @@ const navItems = [
 
 export function DashboardLayout() {
   const { profile, signOut } = useAuth()
-  const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
 
   const handleSignOut = async () => {
@@ -43,16 +41,8 @@ export function DashboardLayout() {
             </span>
             <button
               type="button"
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
-              className="p-2 rounded-full hover:bg-lavender-100 dark:hover:bg-white/10"
-            >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
-            <button
-              type="button"
               onClick={handleSignOut}
-              className="p-2 rounded-full hover:bg-lavender-100 dark:hover:bg-white/10 text-muted hover:text-foreground"
+              className="p-2 rounded-full hover:bg-lavender-100 text-muted hover:text-foreground"
               aria-label="Sign out"
             >
               <LogOut className="w-4 h-4" />
@@ -75,7 +65,7 @@ export function DashboardLayout() {
                       `flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors whitespace-nowrap ${
                         isActive
                           ? 'bg-lavender-400 text-white shadow-glow'
-                          : 'text-muted hover:text-foreground hover:bg-lavender-50 dark:hover:bg-white/5'
+                          : 'text-muted hover:text-foreground hover:bg-lavender-50'
                       }`
                     }
                   >
