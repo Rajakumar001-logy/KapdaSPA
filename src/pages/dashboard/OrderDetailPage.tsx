@@ -6,7 +6,7 @@ import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
 import type { Order } from '../../types/database'
 import { orderServiceLabel, STATUS_LABELS } from '../../types/database'
-import { formatPrice } from '../../lib/location'
+import { formatPrice, calculateServiceSubtotal } from '../../lib/location'
 
 export function OrderDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -121,7 +121,11 @@ export function OrderDetailPage() {
             </p>
             {order.service_price != null && (
               <p className="text-sm text-muted">
-                Service: <span className="font-medium text-foreground">{formatPrice(order.service_price)}</span>
+                Service:{' '}
+                <span className="font-medium text-foreground">
+                  {order.item_count} × {formatPrice(order.service_price)} ={' '}
+                  {formatPrice(calculateServiceSubtotal(order.service_price, order.item_count))}
+                </span>
               </p>
             )}
             {order.delivery_charge != null && (

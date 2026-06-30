@@ -16,7 +16,7 @@ import {
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
 import { contactConfig } from '../../config/contact'
-import { formatPrice } from '../../lib/location'
+import { formatPrice, calculateServiceSubtotal, calculateOrderTotal, normalizeItemCount } from '../../lib/location'
 import type { Laundry, LaundryService, ServiceType } from '../../types/database'
 import { Button } from '../../components/ui/Button'
 
@@ -51,8 +51,10 @@ export function BookPickupPage() {
   const [success, setSuccess] = useState<{ orderNumber: string; id: string } | null>(null)
 
   const deliveryCharge = contactConfig.deliveryCharge
-  const servicePrice = selectedService?.price ?? 0
-  const totalAmount = servicePrice + deliveryCharge
+  const unitPrice = selectedService?.price ?? 0
+  const quantity = normalizeItemCount(itemCount)
+  const serviceSubtotal = calculateServiceSubtotal(unitPrice, quantity)
+  const totalAmount = calculateOrderTotal(unitPrice, quantity, deliveryCharge)
 
   const defaultAddress = [profile?.address, profile?.city, profile?.pin_code]
     .filter(Boolean)
@@ -129,13 +131,13 @@ export function BookPickupPage() {
         laundry_service_id: selectedService.id,
         laundry_name: selectedLaundry.name,
         service_name: selectedService.name,
-        service_price: selectedService.price,
+        service_price: unitPrice,
         delivery_charge: deliveryCharge,
         total_amount: totalAmount,
         pickup_date: pickupDate,
         pickup_time: pickupTime,
         address: address || defaultAddress,
-        item_count: itemCount,
+        item_count: quantity,
         notes: notes || null,
         estimated_delivery: deliveryEstimate.toISOString(),
       })
@@ -375,9 +377,11 @@ export function BookPickupPage() {
               {/* Order summary */}
               <div className="rounded-xl bg-lavender-50/80 dark:bg-white/5 p-4 space-y-2">
                 <p className="text-xs font-semibold uppercase tracking-wider text-lavender-600">Order summary</p>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted">{selectedLaundry.name} · {selectedService.name}</span>
-                  <span className="font-medium text-foreground">{formatPrice(servicePrice)}/{selectedService.price_unit}</span>
+                <div className="flex justify-between text-sm gap-4">
+                  <span className="text-muted">
+                    {selectedService.name} · {quantity} × {formatPrice(unitPrice)}/{selectedService.price_unit}
+                  </span>
+                  <span className="font-medium text-foreground shrink-0">{formatPrice(serviceSubtotal)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-muted flex items-center gap-1">
@@ -462,7 +466,12 @@ export function BookPickupPage() {
                     min={1}
                     max={100}
                     value={itemCount}
-                    onChange={(e) => setItemCount(Number(e.target.value))}
+                    onChange={(e) => {
+                      const next = parseInt(e.target.value, 10)
+                      if (!Number.isNaN(next)) {
+                        setItemCount(Math.min(100, Math.max(1, next)))
+                      }
+                    }}
                     className="w-full pl-10 pr-4 py-3 rounded-xl border border-border bg-surface text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-lavender-400"
                   />
                 </div>
