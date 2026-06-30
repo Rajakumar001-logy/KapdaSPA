@@ -10,8 +10,17 @@ export function Hero() {
   const bookLink = user ? '/dashboard/book' : '/register'
 
   return (
-    <section id="hero" className="relative bg-surface border-b border-border">
-      <div className="container-narrow section-padding relative w-full pt-24 sm:pt-28 pb-16 md:pb-24">
+    <section id="hero" className="relative bg-surface border-b border-border overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat opacity-[0.18]"
+        style={{ backgroundImage: 'url(/hero-laundry.png)' }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-surface/70 via-surface/85 to-surface"
+      />
+      <div className="container-narrow section-padding relative z-10 w-full pt-24 sm:pt-28 pb-16 md:pb-24">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           <motion.div
             initial={{ opacity: 0, y: 16 }}

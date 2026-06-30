@@ -4,7 +4,7 @@ import { BubbleBurstProvider } from './context/BubbleBurstContext'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { BookLocationGate } from './components/auth/LocationGate'
 import { LandingPage } from './pages/LandingPage'
-import { LoginPage, RegisterPage } from './pages/auth/AuthPages'
+import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage } from './pages/auth/AuthPages'
 import { DashboardLayout } from './pages/dashboard/DashboardLayout'
 import { OverviewPage } from './pages/dashboard/OverviewPage'
 import { ProfilePage } from './pages/dashboard/ProfilePage'
@@ -22,6 +22,8 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route
               path="/dashboard"
               element={
