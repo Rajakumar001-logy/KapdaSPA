@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Package, PlusCircle, ArrowRight } from 'lucide-react'
+import { Package, PlusCircle, ArrowRight, MapPin } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
 import type { Order } from '../../types/database'
 import { STATUS_LABELS, orderServiceLabel } from '../../types/database'
 import { Button } from '../../components/ui/Button'
+import { UseCurrentLocationButton } from '../../components/ui/UseCurrentLocationButton'
+import { resolveServingCity } from '../../lib/location'
 
 export function OverviewPage() {
-  const { user, profile } = useAuth()
+  const { user, profile, updateProfile } = useAuth()
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
+  const [locationError, setLocationError] = useState('')
+  const [locationMessage, setLocationMessage] = useState('')
 
   useEffect(() => {
     if (!user) return
@@ -42,6 +46,58 @@ export function OverviewPage() {
       {profile?.location_status === 'unserved' && (
         <div className="mt-6 p-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200/60 dark:border-amber-800/40 text-sm text-amber-800 dark:text-amber-300">
           We&apos;re not in {profile.city} yet — we&apos;ll be live soon. Booking is unavailable for now.
+        </div>
+      )}
+
+      {!profile?.city && (
+        <div className="mt-6 glass-card rounded-2xl p-6 space-y-4">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-lavender-100 flex items-center justify-center shrink-0">
+              <MapPin className="w-5 h-5 text-lavender-600" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-foreground">Set your location</h2>
+              <p className="text-sm text-muted mt-1">
+                Use your current location or choose your city to start booking pickups.
+              </p>
+            </div>
+          </div>
+
+          {locationError && (
+            <div className="p-3 rounded-xl bg-red-50 text-red-600 text-sm">{locationError}</div>
+          )}
+          {locationMessage && (
+            <div className="p-3 rounded-xl bg-green-50 text-green-700 text-sm">{locationMessage}</div>
+          )}
+
+          <UseCurrentLocationButton
+            onLocation={async (detected) => {
+              setLocationError('')
+              setLocationMessage('')
+              const servedCity = resolveServingCity(detected.city)
+              const served = servedCity !== null
+              const { error } = await updateProfile({
+                city: served ? servedCity : detected.city,
+                location_status: served ? 'served' : 'unserved',
+                address: detected.address,
+                pin_code: detected.pinCode,
+              })
+              if (error) {
+                setLocationError(error)
+              } else if (served) {
+                setLocationMessage(`Location set to ${servedCity}. You can book a pickup now.`)
+              } else {
+                setLocationMessage(`We detected ${detected.city}, but we are not serving there yet.`)
+              }
+            }}
+            onError={setLocationError}
+          />
+
+          <Link to="/dashboard/location">
+            <Button variant="secondary" className="w-full !rounded-xl">
+              Choose city manually
+            </Button>
+          </Link>
         </div>
       )}
 

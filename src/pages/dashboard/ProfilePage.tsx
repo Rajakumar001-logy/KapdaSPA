@@ -2,7 +2,9 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { motion } from 'framer-motion'
 import { User, Phone, MapPin, Save } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
+import { resolveServingCity } from '../../lib/location'
 import { Button } from '../../components/ui/Button'
+import { UseCurrentLocationButton } from '../../components/ui/UseCurrentLocationButton'
 
 export function ProfilePage() {
   const { user, profile, updateProfile } = useAuth()
@@ -31,12 +33,17 @@ export function ProfilePage() {
     setMessage('')
     setError('')
 
+    const servedCity = resolveServingCity(city)
+
     const { error: err } = await updateProfile({
       full_name: fullName,
       phone,
       address,
-      city,
+      city: servedCity ?? city,
       pin_code: pinCode,
+      ...(city.trim()
+        ? { location_status: servedCity ? ('served' as const) : ('unserved' as const) }
+        : {}),
     })
 
     setSaving(false)
@@ -119,6 +126,20 @@ export function ProfilePage() {
               onChange={(e) => setAddress(e.target.value)}
               className="w-full pl-10 pr-4 py-3 rounded-xl border border-border bg-surface text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-lavender-400 resize-none"
               placeholder="Flat, building, street"
+            />
+          </div>
+          <div className="mt-3">
+            <UseCurrentLocationButton
+              disabled={saving}
+              onLocation={(location) => {
+                setError('')
+                setMessage('')
+                if (location.address) setAddress(location.address)
+                setCity(location.city)
+                if (location.pinCode) setPinCode(location.pinCode)
+                setMessage(`Location detected: ${location.city}`)
+              }}
+              onError={setError}
             />
           </div>
         </div>

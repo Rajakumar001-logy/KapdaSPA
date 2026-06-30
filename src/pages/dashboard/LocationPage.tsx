@@ -6,6 +6,8 @@ import { contactConfig } from '../../config/contact'
 import { useAuth } from '../../context/AuthContext'
 import { isServingCity, normalizeCityInput, resolveServingCity } from '../../lib/location'
 import { Button } from '../../components/ui/Button'
+import { UseCurrentLocationButton } from '../../components/ui/UseCurrentLocationButton'
+import type { GeocodedLocation } from '../../lib/location'
 
 export function LocationPage() {
   const { profile, updateProfile } = useAuth()
@@ -16,6 +18,17 @@ export function LocationPage() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [unservedCity, setUnservedCity] = useState<string | null>(null)
+  const [detectedHint, setDetectedHint] = useState('')
+
+  const applyDetectedLocation = (detected: GeocodedLocation) => {
+    setError('')
+    setDetectedHint('')
+    setCityInput(detected.city)
+
+    setDetectedHint(
+      `Detected ${detected.city}${detected.pinCode ? ` · PIN ${detected.pinCode}` : ''}. Confirm to continue.`,
+    )
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -129,6 +142,21 @@ export function LocationPage() {
             </div>
           )}
 
+          <UseCurrentLocationButton
+            disabled={submitting}
+            onLocation={(location) => applyDetectedLocation(location)}
+            onError={setError}
+          />
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center" aria-hidden="true">
+              <div className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase tracking-wider">
+              <span className="bg-surface px-3 text-muted">or enter manually</span>
+            </div>
+          </div>
+
           <div>
             <label htmlFor="city" className="block text-sm font-medium text-foreground mb-1.5">
               Your city
@@ -148,6 +176,9 @@ export function LocationPage() {
                 <option key={city} value={city} />
               ))}
             </datalist>
+            {detectedHint && (
+              <p className="mt-2 text-xs text-lavender-600">{detectedHint}</p>
+            )}
           </div>
 
           <div className="rounded-xl bg-lavender-50/80 dark:bg-white/5 p-4">
