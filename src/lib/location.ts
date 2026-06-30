@@ -30,19 +30,3 @@ export function isServingCity(input: string): boolean {
 export function formatPrice(amount: number): string {
   return `₹${amount.toLocaleString('en-IN')}`
 }
-
-export function normalizeItemCount(count: number): number {
-  return Math.max(1, Math.floor(count) || 1)
-}
-
-export function calculateServiceSubtotal(unitPrice: number, itemCount: number): number {
-  return unitPrice * normalizeItemCount(itemCount)
-}
-
-export function calculateOrderTotal(
-  unitPrice: number,
-  itemCount: number,
-  deliveryCharge: number,
-): number {
-  return calculateServiceSubtotal(unitPrice, itemCount) + deliveryCharge
-}

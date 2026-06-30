@@ -81,7 +81,7 @@ export function OrdersPage() {
                 <div>
                   <p className="font-semibold text-foreground">{order.order_number}</p>
                   <p className="text-sm text-muted mt-0.5">
-                    {orderServiceLabel(order)} · {order.item_count} items
+                    {orderServiceLabel(order)}
                   </p>
                   <p className="text-xs text-muted mt-1">
                     Pickup: {order.pickup_date} at {order.pickup_time}

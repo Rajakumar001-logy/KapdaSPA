@@ -16,7 +16,7 @@ import {
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
 import { contactConfig } from '../../config/contact'
-import { formatPrice, calculateServiceSubtotal, calculateOrderTotal, normalizeItemCount } from '../../lib/location'
+import { formatPrice } from '../../lib/location'
 import type { Laundry, LaundryService, ServiceType } from '../../types/database'
 import { Button } from '../../components/ui/Button'
 
@@ -44,17 +44,14 @@ export function BookPickupPage() {
   const [pickupDate, setPickupDate] = useState('')
   const [pickupTime, setPickupTime] = useState(TIME_SLOTS[0])
   const [address, setAddress] = useState('')
-  const [itemCount, setItemCount] = useState(5)
   const [notes, setNotes] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState<{ orderNumber: string; id: string } | null>(null)
 
   const deliveryCharge = contactConfig.deliveryCharge
-  const unitPrice = selectedService?.price ?? 0
-  const quantity = normalizeItemCount(itemCount)
-  const serviceSubtotal = calculateServiceSubtotal(unitPrice, quantity)
-  const totalAmount = calculateOrderTotal(unitPrice, quantity, deliveryCharge)
+  const servicePrice = selectedService?.price ?? 0
+  const totalAmount = servicePrice + deliveryCharge
 
   const defaultAddress = [profile?.address, profile?.city, profile?.pin_code]
     .filter(Boolean)
@@ -131,13 +128,12 @@ export function BookPickupPage() {
         laundry_service_id: selectedService.id,
         laundry_name: selectedLaundry.name,
         service_name: selectedService.name,
-        service_price: unitPrice,
+        service_price: selectedService.price,
         delivery_charge: deliveryCharge,
         total_amount: totalAmount,
         pickup_date: pickupDate,
         pickup_time: pickupTime,
         address: address || defaultAddress,
-        item_count: quantity,
         notes: notes || null,
         estimated_delivery: deliveryEstimate.toISOString(),
       })
@@ -377,11 +373,9 @@ export function BookPickupPage() {
               {/* Order summary */}
               <div className="rounded-xl bg-lavender-50/80 dark:bg-white/5 p-4 space-y-2">
                 <p className="text-xs font-semibold uppercase tracking-wider text-lavender-600">Order summary</p>
-                <div className="flex justify-between text-sm gap-4">
-                  <span className="text-muted">
-                    {selectedService.name} · {quantity} × {formatPrice(unitPrice)}/{selectedService.price_unit}
-                  </span>
-                  <span className="font-medium text-foreground shrink-0">{formatPrice(serviceSubtotal)}</span>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted">{selectedLaundry.name} · {selectedService.name}</span>
+                  <span className="font-medium text-foreground">{formatPrice(servicePrice)}/{selectedService.price_unit}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-muted flex items-center gap-1">
@@ -450,29 +444,6 @@ export function BookPickupPage() {
                     onChange={(e) => setAddress(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 rounded-xl border border-border bg-surface text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-lavender-400 resize-none"
                     placeholder="Enter pickup address"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="itemCount" className="block text-sm font-medium text-foreground mb-1.5">
-                  Approx. Item Count
-                </label>
-                <div className="relative">
-                  <Package className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
-                  <input
-                    id="itemCount"
-                    type="number"
-                    min={1}
-                    max={100}
-                    value={itemCount}
-                    onChange={(e) => {
-                      const next = parseInt(e.target.value, 10)
-                      if (!Number.isNaN(next)) {
-                        setItemCount(Math.min(100, Math.max(1, next)))
-                      }
-                    }}
-                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-border bg-surface text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-lavender-400"
                   />
                 </div>
               </div>
